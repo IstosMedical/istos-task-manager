@@ -68,14 +68,14 @@
 
       tasks.forEach(task => {
         const isCompleted = task.status === "Completed";
-        const buttonLabel = isCompleted ? "✅ Task Completed" : "Task Completed";
+        const buttonLabel = isCompleted ? "✅ Task Completed" : "In-Progress";
         const buttonDisabled = isCompleted ? "disabled" : "";
         const actionCell = `
-          <button onclick="markCompleted('${task.id}')">Task Completed</button>
+        const actionCell = `
+          <button onclick="markCompleted('${task.id}')" ${buttonDisabled}>
             ${buttonLabel}
           </button>
         `;
-
         const row = `<tr>
           <td>${task.description}</td>
           <td>${task.priority}</td>
