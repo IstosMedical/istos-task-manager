@@ -2,6 +2,9 @@ document.getElementById("taskForm").addEventListener("submit", function(e) {
   e.preventDefault();
   const form = e.target;
   const formData = new FormData(form);
+  const spinner = document.getElementById("spinner");
+
+  spinner.style.display = "block"; // Show spinner
 
   fetch("https://script.google.com/macros/s/AKfycbxTAugsqiNINTfWLxAVA1h8tVKqmu1s7CpEkteGSunhZF9ywKpJLA9P0kLyzRVapSJydA/exec", {
     method: "POST",
@@ -9,6 +12,7 @@ document.getElementById("taskForm").addEventListener("submit", function(e) {
   })
   .then(res => res.text())
   .then(data => {
+    spinner.style.display = "none"; // Hide spinner
     showToast("✅ " + data);
     form.reset();
 
@@ -18,6 +22,7 @@ document.getElementById("taskForm").addEventListener("submit", function(e) {
     }, 2000);
   })
   .catch(() => {
+    spinner.style.display = "none"; // Hide spinner
     showToast("⚠️ Error assigning task. Please try again.");
   });
 });
