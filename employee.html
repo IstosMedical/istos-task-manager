@@ -50,7 +50,7 @@
         .then(res => res.json())
         .then(renderTasks)
         .catch(() => {
-          taskTableBody.innerHTML = `<tr><td colspan="6">⚠️ Failed to load tasks</td></tr>`;
+          taskTableBody.innerHTML = `<tr><td colspan="6">No tasks yet assigned</td></tr>`;
         });
     }
 
