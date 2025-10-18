@@ -28,7 +28,7 @@ document.getElementById("taskForm").addEventListener("submit", function(e) {
 });
 
 function markCompleted(title) {
-  const assignee = employeeSelect.value;
+  const employeeSelect = document.getElementById("employee");
   const formData = new FormData();
   formData.append("action", "updateStatus");
   formData.append("title", title);
