@@ -1,9 +1,12 @@
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTAugsqiNINTfWLxAVA1h8tVKqmu1s7CpEkteGSunhZF9ywKpJLA9P0kLyzRVapSJydA/exec";
+
+// Handle task assignment form submission
 document.getElementById("taskForm").addEventListener("submit", function(e) {
   e.preventDefault();
   const form = e.target;
   const formData = new FormData(form);
 
-  formData.append("action", "assignTask"); // ✅ Add this line
+  formData.append("action", "assignTask"); // ✅ Required for backend routing
 
   const spinner = document.getElementById("spinner");
   spinner.style.display = "block";
@@ -27,7 +30,7 @@ document.getElementById("taskForm").addEventListener("submit", function(e) {
   });
 });
 
-
+// Handle task completion
 function markCompleted(taskId) {
   const employeeSelect = document.getElementById("employee");
   const assignee = employeeSelect.value;
@@ -44,11 +47,12 @@ function markCompleted(taskId) {
   .then(res => res.text())
   .then(msg => {
     showToast(msg || "✅ Task marked as completed");
-    loadTasks(); // Refresh UI
+    loadTasks(); // Refresh task list
   })
   .catch(() => showToast("⚠️ Failed to update status"));
 }
 
+// Toast notification logic
 function showToast(message) {
   const toast = document.getElementById("toast");
   toast.textContent = message;
