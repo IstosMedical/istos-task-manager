@@ -23,10 +23,8 @@
     <table id="taskTable">
       <thead>
         <tr>
-          <th>Title</th>
           <th>Description</th>
           <th>Priority</th>
-          <th>Deadline</th>
           <th>Status</th>
           <th>Action</th>
         </tr>
@@ -69,10 +67,8 @@
           : `<button onclick="markCompleted('${task.title}')">Mark Completed</button>`;
 
         const row = `<tr>
-          <td>${task.title}</td>
           <td>${task.description}</td>
           <td>${task.priority}</td>
-          <td>${task.deadline}</td>
           <td>${task.status}</td>
           <td>${actionCell}</td>
         </tr>`;
