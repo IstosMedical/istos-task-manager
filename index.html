@@ -6,19 +6,40 @@
 </head>
 <body>
   <h1>ISTOS Task Assignment</h1>
-  <form id="taskForm">
+
+  <form id="taskForm" method="post">
+    <label>Task Title</label>
     <input type="text" name="title" placeholder="Task Title" required />
-    <textarea name="description" placeholder="Description"></textarea>
-    <select name="priority">
-      <option>Low</option><option>Medium</option><option>High</option>
+
+    <label>Description</label>
+    <textarea name="description" placeholder="Description" required></textarea>
+
+    <label>Priority</label>
+    <select name="priority" required>
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="High">High</option>
     </select>
-    <input type="date" name="deadline" />
+
+    <label>Deadline</label>
+    <input type="date" name="deadline" required />
+
+    <label>Assignee (optional)</label>
     <select name="assignee">
-      <option>Pooja</option><option>Chaitra</option><option>Praveen</option><option>Sarfaraz</option><option>Sridhar</option>
+      <option value="">-- Random --</option>
+      <option value="Pooja">Pooja</option>
+      <option value="Chaitra">Chaitra</option>
+      <option value="Mazhar">Mazhar</option>
+      <option value="Praveen">Praveen</option>
+      <option value="Sarfaraz">Sarfaraz</option>
+      <option value="Sridhar">Sridhar</option>
     </select>
+
     <input type="submit" value="Assign Task" />
   </form>
+
   <div id="response"></div>
+
   <script src="script.js"></script>
 </body>
 </html>
