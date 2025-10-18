@@ -116,7 +116,28 @@ input[type="submit"]:hover {
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+.form-grid {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-grid label {
+  font-weight: bold;
+  text-align: right;
+}
+
+.form-grid select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
 .completed {
   text-decoration: line-through;
   opacity: 0.6;
 }
+
