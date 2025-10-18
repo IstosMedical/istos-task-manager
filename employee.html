@@ -88,10 +88,10 @@
     function markCompleted(title) {
       const assignee = employeeSelect.value;
       const formData = new FormData();
-      formData.append("action", "updateStatus");
+      formData.append("action", "updateStatus"); // Not "assignTask"
       formData.append("title", title);
       formData.append("assignee", assignee);
-
+    
       fetch(WEB_APP_URL, {
         method: "POST",
         body: formData
