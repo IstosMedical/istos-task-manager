@@ -2,30 +2,31 @@ document.getElementById("taskForm").addEventListener("submit", function(e) {
   e.preventDefault();
   const form = e.target;
   const formData = new FormData(form);
+
+  formData.append("action", "assignTask"); // ✅ Add this line
+
   const spinner = document.getElementById("spinner");
+  spinner.style.display = "block";
 
-  spinner.style.display = "block"; // Show spinner
-
-  fetch("https://script.google.com/macros/s/AKfycbxTAugsqiNINTfWLxAVA1h8tVKqmu1s7CpEkteGSunhZF9ywKpJLA9P0kLyzRVapSJydA/exec", {
+  fetch(WEB_APP_URL, {
     method: "POST",
     body: formData
   })
   .then(res => res.text())
   .then(data => {
-    spinner.style.display = "none"; // Hide spinner
+    spinner.style.display = "none";
     showToast("✅ " + data);
     form.reset();
-
-    // Redirect after 2 seconds
     setTimeout(() => {
-    window.location.href = "https://istosmedical.github.io/istos-task-manager/";
+      window.location.href = "https://istosmedical.github.io/istos-task-manager/";
     }, 2000);
   })
   .catch(() => {
-    spinner.style.display = "none"; // Hide spinner
+    spinner.style.display = "none";
     showToast("⚠️ Error assigning task. Please try again.");
   });
 });
+
 
 function markCompleted(taskId) {
   const employeeSelect = document.getElementById("employee");
