@@ -8,8 +8,8 @@
 <body>
   <div class="container">
     <img src="istos-logo.png" alt="ISTOS Logo" class="logo" />
-    <h2>Dashboard:</h2>
-    <div id="dashboard"></div>
+    <h2>Manager Dashboard: All Assigned Tasks</h2>
+    <div id="dashboard">Loading tasks...</div>
   </div>
 
   <script>
@@ -17,55 +17,41 @@
 
     fetch(`${WEB_APP_URL}?view=dashboard`)
       .then(res => res.json())
-      .then(renderDashboard)
+      .then(data => {
+        if (Array.isArray(data)) {
+          renderDashboard(data);
+        } else {
+          document.getElementById("dashboard").innerHTML = "<p>⚠️ No tasks found.</p>";
+        }
+      })
       .catch(() => {
         document.getElementById("dashboard").innerHTML = "<p>⚠️ Failed to load tasks.</p>";
       });
 
-function renderDashboard(tasks) {
-  const grouped = {};
+    function renderDashboard(tasks) {
+      const grouped = {};
 
-  // Group tasks by assignee
-  tasks.forEach(task => {
-    const assignee = task.assignee || "Task List";
-    if (!grouped[assignee]) grouped[assignee] = [];
-    grouped[assignee].push(task);
-  });
+      tasks.forEach(task => {
+        const assignee = task.assignee || "Task List";
+        if (!grouped[assignee]) grouped[assignee] = [];
+        grouped[assignee].push(task);
+      });
 
-  const dashboard = document.getElementById("dashboard");
+      const dashboard = document.getElementById("dashboard");
 
-  // Build HTML for each group
-  dashboard.innerHTML = Object.entries(grouped).map(([assignee, taskList]) => {
-    const rows = taskList.map(task => {
-      const dateOnly = task.deadline?.split("T")[0] || "";
-      return `
-        <tr>
-          <td>${task.description}</td>
-          <td>${task.priority}</td>
-          <td>${task.status}</td>
-          <td>${dateOnly}</td>
-        </tr>
-      `;
-    }).join("");
-
-    return `
-      <div class="card">
-        <h3>${assignee}</h3>
-        <table>
-          <thead>
+      dashboard.innerHTML = Object.entries(grouped).map(([assignee, taskList]) => {
+        const rows = taskList.map(task => {
+          const dateOnly = task.deadline?.split("T")[0] || "";
+          return `
             <tr>
-              <th>Description</th>
-              <th>Priority</th>
-              <th>Status</th>
-              <th>Deadline</th>
+              <td>${task.description}</td>
+              <td>${task.priority}</td>
+              <td>${task.status}</td>
+              <td>${dateOnly}</td>
             </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-    `;
-  }).join("");
-}
+          `;
+        }).join("");
+
         return `
           <div class="card">
             <h3>${assignee}</h3>
