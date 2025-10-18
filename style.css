@@ -194,8 +194,9 @@ input[type="submit"]:hover {
 }
 
 .dashboard-link {
-  text-align: center;
+  text-align: left;
   margin-bottom: 16px;
+  padding-left: 10px;
 }
 
 .dashboard-link a {
