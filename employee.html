@@ -61,6 +61,7 @@
       taskTableBody.innerHTML = "";
 
       if (tasks.length === 0) {
+        taskTableBody.innerHTML = ""; // Clear before appending
         taskTableBody.innerHTML = `<tr><td colspan="4">No tasks assigned</td></tr>`;
         return;
       }
