@@ -33,7 +33,7 @@
       const dashboard = document.getElementById("dashboard");
       dashboard.innerHTML = Object.entries(grouped).map(([assignee, tasks]) => {
         const rows = tasks.map(task => `
-        const dateOnly = task.deadline ? task.deadline.split("T")[0] : "";
+        const dateOnly = task.deadline?.split("T")[0] || "";
           <tr>
             <td>${task.description}</td>
             <td>${task.priority}</td>
