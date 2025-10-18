@@ -11,3 +11,15 @@ document.getElementById("taskForm").addEventListener("submit", function(e) {
     e.target.reset();
   });
 });
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.style.display = "block";
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    toast.style.display = "none";
+  }, 3000);
+}
