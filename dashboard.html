@@ -44,6 +44,7 @@
           const dateOnly = task.deadline?.split("T")[0] || "";
           return `
             <tr>
+              <td>${task.Assignee}</td>
               <td>${task.description}</td>
               <td>${task.priority}</td>
               <td>${task.status}</td>
@@ -58,6 +59,7 @@
             <table>
               <thead>
                 <tr>
+                  <th>${task.Assignee}</th>
                   <th>Description</th>
                   <th>Priority</th>
                   <th>Status</th>
