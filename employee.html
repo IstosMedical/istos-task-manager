@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ISTOS Task Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <img src="icons/istos_logo.png" alt="ISTOS Logo" class="logo">
+    <h2>My Assigned Tasks</h2>
+
+    <label for="employee">Select Your Name</label>
+    <select id="employee">
+      <option value="Pooja">Pooja</option>
+      <option value="Chaitra">Chaitra</option>
+      <option value="Mazhar">Mazhar</option>
+      <option value="Praveen">Praveen</option>
+      <option value="Sarfaraz">Sarfaraz</option>
+      <option value="Sridhar">Sridhar</option>
+    </select>
+
+    <table id="taskTable">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Priority</th>
+          <th>Deadline</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    document.getElementById("employee").addEventListener("change", loadTasks);
+
+    function loadTasks() {
+      const name = document.getElementById("employee").value;
+      fetch(`YOUR_WEB_APP_URL?view=dashboard&assignee=${encodeURIComponent(name)}`)
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.querySelector("#taskTable tbody");
+          tbody.innerHTML = "";
+          data.forEach(task => {
+            const row = `<tr>
+              <td>${task.title}</td>
+              <td>${task.description}</td>
+              <td>${task.priority}</td>
+              <td>${task.deadline}</td>
+              <td>${task.status}</td>
+            </tr>`;
+            tbody.innerHTML += row;
+          });
+        });
+    }
+
+    // Auto-load for default selection
+    window.onload = () => {
+      document.getElementById("employee").value = "Mazhar";
+      loadTasks();
+    };
+  </script>
+</body>
+</html>
