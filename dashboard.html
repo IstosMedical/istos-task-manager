@@ -13,63 +13,72 @@
   </div>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTAugsqiNINTfWLxAVA1h8tVKqmu1s7CpEkteGSunhZF9ywKpJLA9P0kLyzRVapSJydA/exec";
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTAugsqiNINTfWLxAVA1h8tVKqmu1s7CpEkteGSunhZF9ywKpJLA9P0kLyzRVapSJydA/exec";
 
+  window.onload = () => {
     fetch(`${WEB_APP_URL}?view=dashboard`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
           renderDashboard(data);
         } else {
-          document.getElementById("dashboard").innerHTML = "<p>⚠️ No tasks found.</p>";
+          showError("⚠️ No tasks found.");
         }
       })
       .catch(() => {
-        document.getElementById("dashboard").innerHTML = "<p>⚠️ Failed to load tasks.</p>";
+        showError("⚠️ Failed to load tasks.");
       });
+  };
 
-    function renderDashboard(tasks) {
-      const grouped = {};
+  function showError(message) {
+    document.getElementById("dashboard").innerHTML = `<p>${message}</p>`;
+  }
 
-      tasks.forEach(task => {
-        const assignee = task.assignee || "Task List";
-        if (!grouped[assignee]) grouped[assignee] = [];
-        grouped[assignee].push(task);
-      });
+  function renderDashboard(tasks) {
+    const grouped = {};
 
-      const dashboard = document.getElementById("dashboard");
+    tasks.forEach(task => {
+      const assignee = task.assignee || "Task List";
+      if (!grouped[assignee]) grouped[assignee] = [];
+      grouped[assignee].push(task);
+    });
 
-      dashboard.innerHTML = Object.entries(grouped).map(([assignee, taskList]) => {
-        const rows = taskList.map(task => {
-          const dateOnly = task.deadline?.split("T")[0] || "";
-          return `
-            <tr>
-              <td>${task.description}</td>
-              <td>${task.priority}</td>
-              <td>${task.status}</td>
-              <td>${dateOnly}</td>
-            </tr>
-          `;
-        }).join("");
+    const dashboard = document.getElementById("dashboard");
 
+    dashboard.innerHTML = Object.entries(grouped).map(([groupLabel, taskList]) => {
+      const rows = taskList.map(task => {
+        const dateOnly = task.deadline?.split("T")[0] || "";
         return `
-          <div class="card">
-            <h3>${assignee}</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Description</th>
-                  <th>Priority</th>
-                  <th>Status</th>
-                  <th>Deadline</th>
-                </tr>
-              </thead>
-              <tbody>${rows}</tbody>
-            </table>
-          </div>
+          <tr>
+            <td>${task.description}</td>
+            <td>${task.priority}</td>
+            <td>${task.status}</td>
+            <td>${dateOnly}</td>
+            <td>${task.assignee}</td>
+          </tr>
         `;
       }).join("");
-    }
-  </script>
+
+      return `
+        <div class="card">
+          <h3>${groupLabel}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Deadline</th>
+                <th>Assignee</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      `;
+    }).join("");
+  }
+</script>
+
 </body>
 </html>
