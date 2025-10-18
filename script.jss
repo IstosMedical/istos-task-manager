@@ -27,16 +27,24 @@ document.getElementById("taskForm").addEventListener("submit", function(e) {
   });
 });
 
+function markCompleted(title) {
+  const assignee = employeeSelect.value;
+  const formData = new FormData();
+  formData.append("action", "updateStatus");
+  formData.append("title", title);
+  formData.append("assignee", assignee);
 
-function taskCompleted(title) {
-  const rows = document.querySelectorAll("#taskTable tbody tr");
-  rows.forEach(row => {
-    if (row.cells[0].textContent === title) {
-      row.classList.add("completed");
-    }
-  });
+  fetch(WEB_APP_URL, {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.text())
+  .then(msg => {
+    showToast(msg);
+    loadTasks();
+  })
+  .catch(() => showToast("⚠️ Failed to update status"));
 }
-
 
 function showToast(message) {
   const toast = document.getElementById("toast");
