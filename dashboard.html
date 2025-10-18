@@ -25,7 +25,7 @@
     function renderDashboard(tasks) {
       const grouped = {};
       tasks.forEach(task => {
-        const assignee = task.assignee || "Unassigned";
+        const assignee = task.assignee || "Task List";
         if (!grouped[assignee]) grouped[assignee] = [];
         grouped[assignee].push(task);
       });
@@ -33,6 +33,7 @@
       const dashboard = document.getElementById("dashboard");
       dashboard.innerHTML = Object.entries(grouped).map(([assignee, tasks]) => {
         const rows = tasks.map(task => `
+        const dateOnly = task.deadline ? task.deadline.split("T")[0] : "";
           <tr>
             <td>${task.description}</td>
             <td>${task.priority}</td>
