@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ISTOS Manager Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <img src="istos-logo.png" alt="ISTOS Logo" class="logo" />
+    <h2>Manager Dashboard: All Assigned Tasks</h2>
+    <div id="dashboard"></div>
+  </div>
+
+  <script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTAugsqiNINTfWLxAVA1h8tVKqmu1s7CpEkteGSunhZF9ywKpJLA9P0kLyzRVapSJydA/exec";
+
+    fetch(`${WEB_APP_URL}?view=dashboard`)
+      .then(res => res.json())
+      .then(renderDashboard)
+      .catch(() => {
+        document.getElementById("dashboard").innerHTML = "<p>⚠️ Failed to load tasks.</p>";
+      });
+
+    function renderDashboard(tasks) {
+      const grouped = {};
+      tasks.forEach(task => {
+        const assignee = task.assignee || "Unassigned";
+        if (!grouped[assignee]) grouped[assignee] = [];
+        grouped[assignee].push(task);
+      });
+
+      const dashboard = document.getElementById("dashboard");
+      dashboard.innerHTML = Object.entries(grouped).map(([assignee, tasks]) => {
+        const rows = tasks.map(task => `
+          <tr>
+            <td>${task.description}</td>
+            <td>${task.priority}</td>
+            <td>${task.status}</td>
+            <td>${task.deadline}</td>
+          </tr>
+        `).join("");
+
+        return `
+          <div class="card">
+            <h3>${assignee}</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Deadline</th>
+                </tr>
+              </thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>
+        `;
+      }).join("");
+    }
+  </script>
+</body>
+</html>
