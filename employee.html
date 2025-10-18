@@ -10,15 +10,17 @@
     <img src="istos-logo.png" alt="ISTOS Logo" class="logo" />
     <h2>My Assigned Tasks</h2>
 
-    <label for="employee">Team Member</label>
-    <select id="employee">
-      <option value="Pooja">Pooja</option>
-      <option value="Chaitra">Chaitra</option>
-      <option value="Mazhar">Mazhar</option>
-      <option value="Praveen">Praveen</option>
-      <option value="Sarfaraz">Sarfaraz</option>
-      <option value="Sridhar">Sridhar</option>
-    </select>
+    <div class="form-grid">
+      <label for="employee">Team Member</label>
+      <select id="employee">
+        <option value="Pooja">Pooja</option>
+        <option value="Chaitra">Chaitra</option>
+        <option value="Mazhar">Mazhar</option>
+        <option value="Praveen">Praveen</option>
+        <option value="Sarfaraz">Sarfaraz</option>
+        <option value="Sridhar">Sridhar</option>
+      </select>
+    </div>
 
     <table id="taskTable">
       <thead>
@@ -48,7 +50,7 @@
         .then(res => res.json())
         .then(renderTasks)
         .catch(() => {
-          taskTableBody.innerHTML = `<tr><td colspan="6">No tasks yet assigned</td></tr>`;
+          taskTableBody.innerHTML = `<tr><td colspan="4">No tasks yet assigned</td></tr>`;
         });
     }
 
@@ -56,7 +58,7 @@
       taskTableBody.innerHTML = "";
 
       if (tasks.length === 0) {
-        taskTableBody.innerHTML = `<tr><td colspan="6">No tasks assigned</td></tr>`;
+        taskTableBody.innerHTML = `<tr><td colspan="4">No tasks assigned</td></tr>`;
         return;
       }
 
@@ -77,22 +79,12 @@
     }
 
     function markCompleted(title) {
-      const assignee = employeeSelect.value;
-      const formData = new FormData();
-      formData.append("action", "updateStatus");
-      formData.append("title", title);
-      formData.append("assignee", assignee);
-
-      fetch(WEB_APP_URL, {
-        method: "POST",
-        body: formData
-      })
-      .then(res => res.text())
-      .then(msg => {
-        showToast(msg);
-        loadTasks();
-      })
-      .catch(() => showToast("⚠️ Failed to update status"));
+      const rows = document.querySelectorAll("#taskTable tbody tr");
+      rows.forEach(row => {
+        if (row.cells[0].textContent === title) {
+          row.classList.add("completed");
+        }
+      });
     }
 
     function showToast(message) {
