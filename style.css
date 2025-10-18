@@ -78,7 +78,7 @@ input[type="submit"]:hover {
   transform: translateX(-50%);
   background-color: #27ae60;
   color: white;
-  padding: 12px 20px;
+  padding: 10px 20px;
   border-radius: 6px;
   font-weight: bold;
   opacity: 0;
@@ -89,4 +89,5 @@ input[type="submit"]:hover {
 .toast.show {
   opacity: 1;
 }
+
 
