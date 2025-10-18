@@ -41,87 +41,86 @@
   <div id="toast" class="toast" style="display: none;"></div>
 
   <script>
-    const employeeSelect = document.getElementById("employee");
-    const taskTableBody = document.querySelector("#taskTable tbody");
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTAugsqiNINTfWLxAVA1h8tVKqmu1s7CpEkteGSunhZF9ywKpJLA9P0kLyzRVapSJydA/exec";
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTAugsqiNINTfWLxAVA1h8tVKqmu1s7CpEkteGSunhZF9ywKpJLA9P0kLyzRVapSJydA/exec";
+  const employeeSelect = document.getElementById("employee");
+  const taskTableBody = document.querySelector("#taskTable tbody");
 
-    employeeSelect.addEventListener("change", loadTasks);
+  employeeSelect.addEventListener("change", loadTasks);
 
-    function loadTasks() {
-      const employeeSelect = document.getElementById("employee");
-      const assignee = employeeSelect.value;
-    
-      fetch(`${WEB_APP_URL}?view=dashboard&assignee=${encodeURIComponent(assignee)}`)
-        .then(res => res.json())
-        .then(data => {
-          renderTasks(data);
-        })
-        .catch(() => showToast("⚠️ Failed to load tasks"));
+  function loadTasks() {
+    const assignee = employeeSelect.value;
+
+    fetch(`${WEB_APP_URL}?view=dashboard&assignee=${encodeURIComponent(assignee)}`)
+      .then(res => res.json())
+      .then(data => renderTasks(data))
+      .catch(() => showToast("⚠️ Failed to load tasks"));
+  }
+
+  function renderTasks(tasks) {
+    taskTableBody.innerHTML = "";
+
+    if (!Array.isArray(tasks) || tasks.length === 0) {
+      taskTableBody.innerHTML = `<tr><td colspan="4">No tasks assigned</td></tr>`;
+      return;
     }
 
-    function renderTasks(tasks) {
-      taskTableBody.innerHTML = "";
+    const rows = tasks.map(task => {
+      const isCompleted = task.status === "Completed";
+      const buttonLabel = isCompleted ? "✅ Task Completed" : "In-Progress";
+      const buttonDisabled = isCompleted ? "disabled" : "";
 
-      if (tasks.length === 0) {
-        taskTableBody.innerHTML = ""; // Clear before appending
-        taskTableBody.innerHTML = `<tr><td colspan="4">No tasks assigned</td></tr>`;
-        return;
-      }
-
-      tasks.forEach(task => {
-        const isCompleted = task.status === "Completed";
-        const buttonLabel = isCompleted ? "✅ Task Completed" : "In-Progress";
-        const buttonDisabled = isCompleted ? "disabled" : "";
-        const actionCell = `
-        const actionCell = `
-          <button onclick="markCompleted('${task.id}')">
-            ${buttonLabel}
-          </button>
-        `;
-        const row = `<tr>
+      return `
+        <tr>
           <td>${task.description}</td>
           <td>${task.priority}</td>
           <td>${task.status}</td>
-          <td>${actionCell}</td>
-        </tr>`;
-        taskTableBody.innerHTML += row;
-      });
-    }
+          <td>
+            <button onclick="markCompleted('${task.id}')" ${buttonDisabled}>
+              ${buttonLabel}
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join("");
 
-      function markCompleted(taskId) {
-        const assignee = employeeSelect.value;
-        const formData = new FormData();
-        formData.append("action", "updateStatus");
-        formData.append("taskId", taskId);
-        formData.append("assignee", assignee);
-      
-        fetch(WEB_APP_URL, {
-          method: "POST",
-          body: formData
-        })
-        .then(res => res.text())
-        .then(msg => {
-          showToast(msg);
-          loadTasks();
-        })
-        .catch(() => showToast("⚠️ Failed to update status"));
-      }
+    taskTableBody.innerHTML = rows;
+  }
 
-    function showToast(message) {
-      const toast = document.getElementById("toast");
-      toast.textContent = message;
-      toast.style.display = "block";
-      toast.classList.add("show");
+  function markCompleted(taskId) {
+    const assignee = employeeSelect.value;
+    const formData = new FormData();
+    formData.append("action", "updateStatus");
+    formData.append("taskId", taskId);
+    formData.append("assignee", assignee);
 
-      setTimeout(() => {
-        toast.classList.remove("show");
-        toast.style.display = "none";
-      }, 3000);
-    }
+    fetch(WEB_APP_URL, {
+      method: "POST",
+      body: formData
+    })
+    .then(res => res.text())
+    .then(msg => {
+      showToast(msg || "✅ Task marked as completed");
+      loadTasks();
+    })
+    .catch(() => showToast("⚠️ Failed to update status"));
+  }
 
-    window.onload = () => {
-      employeeSelect.value = "";
-    };
-  </script>
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.style.display = "block";
+    toast.classList.add("show");
+
+    setTimeout(() => {
+      toast.classList.remove("show");
+      toast.style.display = "none";
+    }, 3000);
+  }
+
+  window.onload = () => {
+    employeeSelect.value = "";
+    loadTasks(); // Optional: auto-load default view
+  };
+</script>
 </body>
 </html>
