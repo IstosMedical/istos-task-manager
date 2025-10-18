@@ -128,10 +128,7 @@ input[type="submit"]:hover {
 }
 
 .form-row {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  align-items: center;
-  gap: 12px;
+  grid-template-columns: 140px auto;
 }
 
 .form-row label {
