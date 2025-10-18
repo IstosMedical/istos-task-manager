@@ -71,7 +71,7 @@
         const buttonLabel = isCompleted ? "✅ Task Completed" : "Task Completed";
         const buttonDisabled = isCompleted ? "disabled" : "";
         const actionCell = `
-          <button onclick="markCompleted('${task.title}')" ${buttonDisabled}>
+          <button onclick="markCompleted('${task.id}')">Task Completed</button>
             ${buttonLabel}
           </button>
         `;
@@ -86,24 +86,24 @@
       });
     }
 
-    function markCompleted(title) {
-      const assignee = employeeSelect.value;
-      const formData = new FormData();
-      formData.append("action", "updateStatus"); // Not "assignTask"
-      formData.append("title", title);
-      formData.append("assignee", assignee);
-    
-      fetch(WEB_APP_URL, {
-        method: "POST",
-        body: formData
-      })
-      .then(res => res.text())
-      .then(msg => {
-        showToast(msg || "✅ Task marked as completed");
-        loadTasks(); // Refresh UI
-      })
-      .catch(() => showToast("⚠️ Failed to update status"));
-    }
+      function markCompleted(taskId) {
+        const assignee = employeeSelect.value;
+        const formData = new FormData();
+        formData.append("action", "updateStatus");
+        formData.append("taskId", taskId);
+        formData.append("assignee", assignee);
+      
+        fetch(WEB_APP_URL, {
+          method: "POST",
+          body: formData
+        })
+        .then(res => res.text())
+        .then(msg => {
+          showToast(msg || "✅ Task marked as completed");
+          loadTasks(); // Refresh UI
+        })
+        .catch(() => showToast("⚠️ Failed to update status"));
+      }
 
     function showToast(message) {
       const toast = document.getElementById("toast");
