@@ -28,7 +28,7 @@ document.getElementById("taskForm").addEventListener("submit", function(e) {
 });
 
 
-function markCompleted(title) {
+function taskCompleted(title) {
   const rows = document.querySelectorAll("#taskTable tbody tr");
   rows.forEach(row => {
     if (row.cells[0].textContent === title) {
