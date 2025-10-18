@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>ISTOS Task Manager</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -10,24 +11,24 @@
       <img src="istos_logo.png" alt="ISTOS Logo" class="logo">
       <h2>ISTOS Task Assignment</h2>
 
-      <label>Task Title</label>
-      <input type="text" name="title" placeholder="Task Title" required />
+      <label for="title">Task Title</label>
+      <input type="text" id="title" name="title" placeholder="Task Title" required />
 
-      <label>Description</label>
-      <textarea name="description" placeholder="Description" required></textarea>
+      <label for="description">Description</label>
+      <textarea id="description" name="description" placeholder="Description" required></textarea>
 
-      <label>Priority</label>
-      <select name="priority" required>
+      <label for="priority">Priority</label>
+      <select id="priority" name="priority" required>
         <option value="Low">Low</option>
         <option value="Medium">Medium</option>
         <option value="High">High</option>
       </select>
 
-      <label>Deadline</label>
-      <input type="date" name="deadline" required />
+      <label for="deadline">Deadline</label>
+      <input type="date" id="deadline" name="deadline" required />
 
-      <label>Assignee</label>
-      <select name="assignee">
+      <label for="assignee">Assignee (optional)</label>
+      <select id="assignee" name="assignee">
         <option value="">-- Team member --</option>
         <option value="Pooja">Pooja</option>
         <option value="Chaitra">Chaitra</option>
