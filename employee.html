@@ -67,9 +67,13 @@
 
       tasks.forEach(task => {
         const isCompleted = task.status === "Completed";
-        const actionCell = isCompleted
-          ? ""
-          : `<button onclick="markCompleted('${task.title}')">Task Completed</button>`;
+        const buttonLabel = isCompleted ? "✅ Task Completed" : "Task Completed";
+        const buttonDisabled = isCompleted ? "disabled" : "";
+        const actionCell = `
+          <button onclick="markCompleted('${task.title}')" ${buttonDisabled}>
+            ${buttonLabel}
+          </button>
+        `;
 
         const row = `<tr>
           <td>${task.description}</td>
@@ -82,12 +86,22 @@
     }
 
     function markCompleted(title) {
-      const rows = document.querySelectorAll("#taskTable tbody tr");
-      rows.forEach(row => {
-        if (row.cells[0].textContent === title) {
-          row.classList.add("completed");
-        }
-      });
+      const assignee = employeeSelect.value;
+      const formData = new FormData();
+      formData.append("action", "updateStatus");
+      formData.append("title", title);
+      formData.append("assignee", assignee);
+
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.text())
+      .then(msg => {
+        showToast(msg || "✅ Task marked as completed");
+        loadTasks(); // Refresh UI
+      })
+      .catch(() => showToast("⚠️ Failed to update status"));
     }
 
     function showToast(message) {
@@ -105,7 +119,6 @@
     window.onload = () => {
       employeeSelect.value = "";
     };
-
   </script>
 </body>
 </html>
