@@ -22,26 +22,50 @@
         document.getElementById("dashboard").innerHTML = "<p>⚠️ Failed to load tasks.</p>";
       });
 
-    function renderDashboard(tasks) {
-      const grouped = {};
-      tasks.forEach(task => {
-        const assignee = task.assignee || "Task List";
-        if (!grouped[assignee]) grouped[assignee] = [];
-        grouped[assignee].push(task);
-      });
+function renderDashboard(tasks) {
+  const grouped = {};
 
-      const dashboard = document.getElementById("dashboard");
-      dashboard.innerHTML = Object.entries(grouped).map(([assignee, tasks]) => {
-        const rows = tasks.map(task => `
-        const dateOnly = task.deadline?.split("T")[0] || "";
-          <tr>
-            <td>${task.description}</td>
-            <td>${task.priority}</td>
-            <td>${task.status}</td>
-            <td>${task.deadline}</td>
-          </tr>
-        `).join("");
+  // Group tasks by assignee
+  tasks.forEach(task => {
+    const assignee = task.assignee || "Task List";
+    if (!grouped[assignee]) grouped[assignee] = [];
+    grouped[assignee].push(task);
+  });
 
+  const dashboard = document.getElementById("dashboard");
+
+  // Build HTML for each group
+  dashboard.innerHTML = Object.entries(grouped).map(([assignee, taskList]) => {
+    const rows = taskList.map(task => {
+      const dateOnly = task.deadline?.split("T")[0] || "";
+      return `
+        <tr>
+          <td>${task.description}</td>
+          <td>${task.priority}</td>
+          <td>${task.status}</td>
+          <td>${dateOnly}</td>
+        </tr>
+      `;
+    }).join("");
+
+    return `
+      <div class="card">
+        <h3>${assignee}</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th>Deadline</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    `;
+  }).join("");
+}
         return `
           <div class="card">
             <h3>${assignee}</h3>
