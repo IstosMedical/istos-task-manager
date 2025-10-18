@@ -27,6 +27,17 @@ document.getElementById("taskForm").addEventListener("submit", function(e) {
   });
 });
 
+
+function markCompleted(title) {
+  const rows = document.querySelectorAll("#taskTable tbody tr");
+  rows.forEach(row => {
+    if (row.cells[0].textContent === title) {
+      row.classList.add("completed");
+    }
+  });
+}
+
+
 function showToast(message) {
   const toast = document.getElementById("toast");
   toast.textContent = message;
