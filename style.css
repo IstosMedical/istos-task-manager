@@ -110,3 +110,7 @@ input[type="submit"]:hover {
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
