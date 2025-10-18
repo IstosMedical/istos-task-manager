@@ -5,41 +5,43 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>ISTOS Task Assignment</h2>
-  <img src="icons/istos_logo.png" alt="ISTOS Logo" class="logo">
+  <div class="container">
+    <form id="taskForm" method="post">
+      <img src="icons/istos_logo.png" alt="ISTOS Logo" class="logo">
+      <h2>ISTOS Task Assignment</h2>
 
-  <form id="taskForm" method="post">
-    <label>Task Title</label>
-    <input type="text" name="title" placeholder="Task Title" required />
+      <label>Task Title</label>
+      <input type="text" name="title" placeholder="Task Title" required />
 
-    <label>Description</label>
-    <textarea name="description" placeholder="Description" required></textarea>
+      <label>Description</label>
+      <textarea name="description" placeholder="Description" required></textarea>
 
-    <label>Priority</label>
-    <select name="priority" required>
-      <option value="Low">Low</option>
-      <option value="Medium">Medium</option>
-      <option value="High">High</option>
-    </select>
+      <label>Priority</label>
+      <select name="priority" required>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
 
-    <label>Deadline</label>
-    <input type="date" name="deadline" required />
+      <label>Deadline</label>
+      <input type="date" name="deadline" required />
 
-    <label>Assignee (optional)</label>
-    <select name="assignee">
-      <option value="">-- Team member --</option>
-      <option value="Pooja">Pooja</option>
-      <option value="Chaitra">Chaitra</option>
-      <option value="Mazhar">Mazhar</option>
-      <option value="Praveen">Praveen</option>
-      <option value="Sarfaraz">Sarfaraz</option>
-      <option value="Sridhar">Sridhar</option>
-    </select>
+      <label>Assignee (optional)</label>
+      <select name="assignee">
+        <option value="">-- Team member --</option>
+        <option value="Pooja">Pooja</option>
+        <option value="Chaitra">Chaitra</option>
+        <option value="Mazhar">Mazhar</option>
+        <option value="Praveen">Praveen</option>
+        <option value="Sarfaraz">Sarfaraz</option>
+        <option value="Sridhar">Sridhar</option>
+      </select>
 
-    <input type="submit" value="Assign Task" />
-  </form>
+      <input type="submit" value="Assign Task" />
+    </form>
 
-  <div id="response"></div>
+    <div id="response"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>
