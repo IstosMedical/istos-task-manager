@@ -69,7 +69,7 @@
         const isCompleted = task.status === "Completed";
         const actionCell = isCompleted
           ? ""
-          : `<button onclick="taskCompleted('${task.title}')">Task Completed</button>`;
+          : `<button onclick="markCompleted('${task.title}')">Task Completed</button>`;
 
         const row = `<tr>
           <td>${task.description}</td>
