@@ -26,6 +26,10 @@ body {
   }
 }
 
+.container.compact {
+  max-width: 480px;
+}
+
 .logo {
   display: block;
   margin: 0 auto 20px auto;
