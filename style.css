@@ -116,6 +116,10 @@ input[type="submit"]:hover {
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+.form-row select {
+  max-width: 220px; /* Adjust as needed */
+}
+
 .form-grid {
   display: flex;
   flex-direction: column;
