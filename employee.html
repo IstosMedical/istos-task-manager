@@ -72,7 +72,7 @@
         const buttonDisabled = isCompleted ? "disabled" : "";
         const actionCell = `
         const actionCell = `
-          <button onclick="markCompleted('${task.id}')" ${buttonDisabled}>
+          <button onclick="markCompleted('${task.id}')">
             ${buttonLabel}
           </button>
         `;
@@ -99,8 +99,8 @@
         })
         .then(res => res.text())
         .then(msg => {
-          showToast(msg || "✅ Task marked as completed");
-          loadTasks(); // Refresh UI
+          showToast(msg);
+          loadTasks();
         })
         .catch(() => showToast("⚠️ Failed to update status"));
       }
