@@ -48,13 +48,15 @@
     employeeSelect.addEventListener("change", loadTasks);
 
     function loadTasks() {
+      const employeeSelect = document.getElementById("employee");
       const assignee = employeeSelect.value;
+    
       fetch(`${WEB_APP_URL}?view=dashboard&assignee=${encodeURIComponent(assignee)}`)
         .then(res => res.json())
-        .then(renderTasks)
-        .catch(() => {
-          taskTableBody.innerHTML = `<tr><td colspan="4">No tasks yet assigned</td></tr>`;
-        });
+        .then(data => {
+          renderTasks(data);
+        })
+        .catch(() => showToast("⚠️ Failed to load tasks"));
     }
 
     function renderTasks(tasks) {
