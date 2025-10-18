@@ -27,11 +27,13 @@ document.getElementById("taskForm").addEventListener("submit", function(e) {
   });
 });
 
-function markCompleted(title) {
+function markCompleted(taskId) {
   const employeeSelect = document.getElementById("employee");
+  const assignee = employeeSelect.value;
+
   const formData = new FormData();
   formData.append("action", "updateStatus");
-  formData.append("title", title);
+  formData.append("taskId", taskId);
   formData.append("assignee", assignee);
 
   fetch(WEB_APP_URL, {
@@ -40,8 +42,8 @@ function markCompleted(title) {
   })
   .then(res => res.text())
   .then(msg => {
-    showToast(msg);
-    loadTasks();
+    showToast(msg || "✅ Task marked as completed");
+    loadTasks(); // Refresh UI
   })
   .catch(() => showToast("⚠️ Failed to update status"));
 }
