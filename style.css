@@ -1,3 +1,49 @@
+.section-divider {
+  border: none;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 20px 0;
+}
+
+.tag-search {
+  margin-bottom: 20px;
+}
+
+.tag-search label {
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.tag-search input[type="text"] {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 300px;
+}
+
+.tag-suggestions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background-color: #eaf4ff;
+  color: #007bff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.tag:hover {
+  background-color: #d0eaff;
+}
+
+
 body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
