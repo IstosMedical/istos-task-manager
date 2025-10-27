@@ -1,3 +1,37 @@
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.search-tags-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.tag-suggestions-inline {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background-color: #eaf4ff;
+  color: #007bff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.tag:hover {
+  background-color: #d0eaff;
+}
+
 .quotation-input {
   width: 75%;
   max-width: 400px;
@@ -37,21 +71,6 @@
   gap: 8px;
   flex-wrap: wrap;
 }
-
-.tag {
-  background-color: #eaf4ff;
-  color: #007bff;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.tag:hover {
-  background-color: #d0eaff;
-}
-
 
 body {
   font-family: 'Segoe UI', sans-serif;
