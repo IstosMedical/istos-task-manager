@@ -1,3 +1,12 @@
+.quotation-input {
+  width: 75%;
+  max-width: 400px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
 .section-divider {
   border: none;
   height: 1px;
